@@ -1,0 +1,107 @@
+@mixin Heading1 {
+  font-family: 'Circe Rounded';
+  font-style: normal;
+  font-weight: 800;
+  font-size: 1.75rem;
+  line-height: 2.5rem;
+  letter-spacing: 0.01em;
+}
+
+@mixin Heading2 {
+  @include Heading1();
+  font-size: 1.5rem;
+  line-height: 2rem;
+  text-transform: uppercase;
+}
+
+@mixin CirceRounded16 {
+  font-family: 'Circe Rounded';
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+@mixin Roboto16 {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+@mixin Roboto16Bold {
+  @include Roboto16();
+  font-weight: 600;
+}
+
+@mixin Roboto14 {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: .875rem;
+  line-height: 1.375rem;
+}
+
+@mixin Roboto14Bold {
+  @include Roboto14();
+  font-weight: 600;
+}
+
+@mixin Link($active: 0) {
+  color: $black;
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+  }
+
+  @if ($active != 0) {
+    &:active{
+      color: $white;
+    }
+  }
+}
+
+@mixin Button($fluid: 0, $padding: 12px) {
+  @include CirceRounded16();
+  width: auto;
+  background: $orange;
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  padding: $padding 16px;
+  border-radius: 5px;
+  transition: all .3s linear;
+  border: 1px solid $white !important;
+  box-sizing: border-box;
+  &:hover, &:active, &:focus{
+    background: $white;
+    color: $orange !important;
+    border: 1px solid $orange !important;
+  }
+  @if($fluid > 0) {
+    width: 100%;
+  }
+}
+
+@mixin ButtonDisabled {
+  @include Button(1);
+  background: $darkGrey;
+  &:hover, &:active, &:focus{
+    color: $darkGrey !important;
+    background: $white;
+    border: 1px solid $darkGrey !important;
+  }
+}
+
+@mixin ButtonDanger {
+  @include Button(1);
+  background: $red;
+  &:hover, &:active, &:focus{
+    color: $red !important;
+    background: $white;
+    border: 1px solid $red !important;
+  }
+}

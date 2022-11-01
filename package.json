@@ -1,0 +1,41 @@
+{
+  "name": "cheesy-market",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "nuxi build",
+    "dev": "nuxi dev",
+    "generate": "nuxi generate",
+    "preview": "nuxi build && nuxi preview"
+  },
+  "dependencies": {
+    "@coreui/bootstrap-vue": "^1.0.0-beta.0",
+    "@coreui/coreui": "^4.2.2",
+    "@nuxt/image-edge": "^1.0.0-27719579.87dcdf2",
+    "@nuxt/kit": "^3.0.0-rc.12",
+    "@nuxtjs/eslint-config-typescript": "^10.0.0",
+    "@nuxtjs/google-fonts": "^3.0.0-0",
+    "@pinia/nuxt": "^0.4.1",
+    "@popperjs/core": "^2.11.5",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
+    "@vueform/slider": "^2.1.2",
+    "bootstrap": "^5.2.0",
+    "cheesy-api-article-parser": "0.0.2",
+    "eslint": "^8.21.0",
+    "eslint-plugin-vue": "^9.3.0",
+    "jsdom": "^20.0.2",
+    "pinia": "^2.0.17",
+    "sass": "^1.53.0",
+    "sass-loader": "10.1.1",
+    "swiper": "^8.3.2",
+    "typescript": "^4.7.4",
+    "vite-plugin-eslint": "^1.7.0",
+    "vite-svg-loader": "^3.4.0",
+    "vitest": "^0.24.3",
+    "vue-star-rating": "^2.1.0",
+    "vue-tsc": "^0.40.13"
+  },
+  "devDependencies": {
+    "nuxt": "^3.0.0-rc.12"
+  }
+}
