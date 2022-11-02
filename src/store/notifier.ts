@@ -9,6 +9,8 @@ export const useNotifierStore =  defineStore('notifier', () => {
   };
 
   const addServerError = () => {
+    // eslint-disable-next-line no-console
+    console.log('err');
     addNotification({ title: 'Ошибка!', body: 'Извините, на сервере произошла ошибка. Попробуйте позже.', variant: 'danger', autohide: false });
   };
 

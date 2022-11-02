@@ -125,11 +125,19 @@ const error = ref(false);
 const { bool: isVisibleFilters, toggleBool: toggleVisibleFilters } = useGetToggledBoolean();
 const { pagination, activePage, totalPages } = usePagination();
 
+const pricesUrl = `/products/prices?type=${providedOptions.value?.type || defaultOptions.type}`;
 const pricesResponse = await useApiAsyncData<ServerResponseI<'min'|'max', number>>(
-  'prices', `/products/prices?type=${providedOptions.value?.type || defaultOptions.type}`
+  'prices', pricesUrl
 );
-options.value.priceFrom = useValidateResponse(pricesResponse)?.data.min || defaultOptions.priceFrom;
-options.value.priceTo = useValidateResponse(pricesResponse)?.data.max || defaultOptions.priceTo;
+
+const { min, max } = useValidateResponse(pricesResponse)?.data ||
+  (await $fetchApi<ServerResponseI<'min'|'max', number>>(pricesUrl))?.data ||
+  {
+    min: defaultOptions.priceFrom,
+    max: defaultOptions.priceTo
+  };
+options.value.priceFrom = min || defaultOptions.priceFrom;
+options.value.priceTo = max || defaultOptions.priceTo;
 
 const getProducts = async (offset = 0) => {
   await $fetchApi<ServerResponseI<'products', ShortProduct[]>>('/products', {

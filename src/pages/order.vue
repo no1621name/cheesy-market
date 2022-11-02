@@ -6,7 +6,7 @@
     <template #default>
       <Info v-if="!isAuth">
         <p class="m-0 text-center fs-3">
-          Чтобы попасть в профиль <NuxtLink to="/auth" class="highlighted">
+          Чтобы оформить заказ <NuxtLink to="/auth" class="highlighted">
             авторизуйтесь
           </NuxtLink>
         </p>

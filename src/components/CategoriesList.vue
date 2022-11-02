@@ -99,10 +99,12 @@ const mainCategoriesResponse = await useApiAsyncData<{statusCode: StatusCodes, d
   'allCategories', '/products/categories',
 );
 
-allCategories.value = useValidateResponse(mainCategoriesResponse)?.data || {
-  bigCategories: [],
-  categories: [],
-};
+allCategories.value = await useValidateResponse(mainCategoriesResponse)?.data ||
+  (await $fetchApi<{statusCode: StatusCodes, data: AllCategories}>('/products/categories')).data ||
+  {
+    bigCategories: [],
+    categories: [],
+  };
 
 const fiterCategories = (bigCategoryChildrenIds: number[]) => {
   return allCategories.value.categories.filter((c: Category) =>

@@ -37,9 +37,9 @@
       <NuxtLink to="/blogs" class="nav__item nav__link">
         Блог
       </NuxtLink>
-      <NuxtLink to="/contacts" class="nav__item nav__link">
-        Контакты
-      </NuxtLink>
+      <!-- <NuxtLink to="/contacts" class="nav__item nav__link"> -->
+      <!--   Контакты -->
+      <!-- </NuxtLink> -->
     </template>
     <template v-else>
       <header class="nav__header">

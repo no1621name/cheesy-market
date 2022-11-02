@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import RecipesCategoriesList from '@/components/Recipes/Categories/List.vue';
+import RecipesCategoriesList from '@/components/RecipesCategories/List.vue';
 import ArticlesList from '@/components/Articles/List.vue';
 
 import { useBreadCrumbsStore } from '@/store/breadCrumbs';
