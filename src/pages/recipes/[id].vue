@@ -30,5 +30,5 @@ definePageMeta({
 
 const id = useRoute().params.id;
 const recipeRequest = await useApiAsyncData<ServerResponseI<'recipe', Article>>(`recipe${id}`, `/recipes/${id}`);
-const recipe = useValidateResponse(recipeRequest)!.data.recipe;
+const recipe = useValidateResponse(recipeRequest, true)!.data.recipe;
 </script>

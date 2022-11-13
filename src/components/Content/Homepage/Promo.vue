@@ -41,7 +41,7 @@
         xs="12"
         :style="{backgroundImage: 'url(' + `${cloudinaryUrl}/pages/promo-3.png`+ ')'}"
       >
-        <NuxtLink class="promo__link" to="/">
+        <NuxtLink class="promo__link" to="/sales">
           <h6 class="promo__heading_sub">
             Акции
           </h6>

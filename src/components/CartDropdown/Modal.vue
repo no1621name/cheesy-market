@@ -8,7 +8,6 @@
       </CCol>
       <CCol sm="12">
         <div class="cart-modal__list">
-          <!-- TODO: add link -->
           <CartDropdownItem
             v-for="product in list"
             :key="product._id"

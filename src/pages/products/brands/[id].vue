@@ -55,7 +55,7 @@ addBreadCrumb({ name: 'Бренды', href: '/brands' });
 
 const brandId = +useRoute().params.id;
 const brandRequest = await useApiAsyncData<ServerResponseI<'brand', Brand>>(`brand${brandId}`, `/products/brands/${brandId}`);
-const brand = useValidateResponse(brandRequest)!.data.brand;
+const brand = useValidateResponse(brandRequest, true)!.data.brand;
 addBreadCrumb({ name: brand.name || 'Бренд', href: `/brands/${brandId}` });
 </script>
 

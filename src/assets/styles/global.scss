@@ -93,6 +93,14 @@
   }
 }
 
+.title{
+  color: $brown;
+  @include Heading1();
+  &.title-uppercased{
+    @include Heading2();
+  }
+}
+
 .tooltip{
   .tooltip-arrow{
     opacity: .8;

@@ -40,7 +40,7 @@
         <CCol :lg="6">
           <AuthRegistForm
             :header="false"
-            @change-form="(val) => formContent = val"
+            @change-form="formContentHandler"
           />
         </CCol>
       </CRow>
@@ -56,8 +56,7 @@
           <AuthLoginForm
             :tip="false"
             :header="false"
-            @submit="() => navigateTo('/profile')"
-            @change-form="(val) => formContent = val"
+            @change-form="formContentHandler"
           />
         </CCol>
         <CCol :lg="6" class="auth__side-content d-flex align-items-center flex-column justify-content-evenly">
@@ -88,8 +87,7 @@
           </header>
           <AuthRecoverForm
             :header="false"
-            @submit="() => navigateTo('/profile')"
-            @change-form="(val) => formContent = val"
+            @change-form="formContentHandler"
           />
         </CCol>
       </CRow>
@@ -133,7 +131,15 @@ definePageMeta({
   layout: 'min',
 });
 
-const formContent = ref<ModalContent>('regist');
+const formContent = ref<AuthContent>('regist');
+
+const formContentHandler = async (c: AuthContent) => {
+  if (c === 'close') {
+    await navigateTo('/profile');
+  } else {
+    formContent.value = c;
+  }
+};
 </script>
 
 <style lang="scss">

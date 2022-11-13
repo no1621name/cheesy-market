@@ -31,14 +31,14 @@ import RegistForm from '@/components/Auth/RegistForm.vue';
 
 const props = withDefaults(defineProps<{
   show: boolean,
-  formType?: ModalContent,
+  formType?: AuthContent,
 }>(), {
   show: false,
   formType: 'login',
 });
 
 const { show, formType } = toRefs(props);
-const authModalContent = ref<ModalContent>(formType.value);
+const authModalContent = ref<AuthContent>(formType.value);
 
 watch(show, (newShowValue) => {
   if (newShowValue && document) {
@@ -56,7 +56,7 @@ const onEsc = (e: KeyboardEvent) => {
   }
 };
 
-const changeFormContent = (name: ModalContent) => {
+const changeFormContent = (name: AuthContent) => {
   if (name === 'close') {
     emit('close');
     authModalContent.value = 'login';

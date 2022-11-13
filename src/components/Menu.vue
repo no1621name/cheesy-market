@@ -66,7 +66,7 @@
       <NuxtLink to="/" class="nav__item nav__link">
         Контакты
       </NuxtLink>
-      <NuxtLink to="/sets">
+      <NuxtLink to="/sets" class="nav__item nav__link">
         Наборы
       </NuxtLink>
       <footer class="nav__footer">

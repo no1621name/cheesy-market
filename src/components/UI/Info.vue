@@ -6,6 +6,7 @@
 
 <style lang="scss">
 .info {
+  @include CirceRounded16();
   background: #FDF2D8;
   h3 {
     color: $brown;

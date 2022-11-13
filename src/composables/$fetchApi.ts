@@ -2,15 +2,8 @@ import { FetchOptions } from 'ohmyfetch';
 import { useNotifierStore } from '@/store/notifier';
 let notifierStore;
 
-export default <T, >(url: string, options?: FetchOptions, defaultErr = true) => {
-  const { baseApiUrl, apiKey } = useRuntimeConfig().public;
-
-  return $fetch<T>(`/api${url}`, useMergeDeep({ ...options }, {
-    headers: {
-      'x-api-key': apiKey,
-    },
-    baseURL: baseApiUrl,
-    credentials: 'include',
+export default <T, >(url: string, options?: FetchOptions, defaultErr = true) =>
+  $fetch<T>(`/api${url}`, useMergeDeep({ ...options }, {
     onResponseError: defaultErr
       ? async () => {
         if (process.client) {
@@ -21,4 +14,3 @@ export default <T, >(url: string, options?: FetchOptions, defaultErr = true) => 
       // eslint-disable-next-line no-console
       : async () => { console.log('Error'); },
   }));
-};

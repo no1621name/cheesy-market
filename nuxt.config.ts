@@ -1,24 +1,16 @@
-import { defineNuxtConfig } from 'nuxt';
 import eslintPlugin from 'vite-plugin-eslint';
 import svgLoader from 'vite-svg-loader';
 
-export default defineNuxtConfig({
+export default {
   srcDir: './src',
   ssr: true,
-  build: {
-    loaders: {
-      scss: {
-        implementation: require('sass'),
-      },
-    }
-  },
-  meta: {
-    title: 'Сыроварение'
+  app: {
+    head: {
+      title: 'Сыроварение',
+    },
   },
   modules: [
     '@nuxt/image-edge',
-  ],
-  buildModules: [
     '@nuxtjs/google-fonts',
     '@pinia/nuxt',
   ],
@@ -59,6 +51,8 @@ export default defineNuxtConfig({
     }
   },
   runtimeConfig: {
+    baseApiUrl: '',
+    apiKey: '',
     public: {
       cloudinaryUrl: '',
       baseApiUrl: '',
@@ -68,4 +62,4 @@ export default defineNuxtConfig({
   alias: {
     '@/': '<srcDir>'
   },
-});
+};

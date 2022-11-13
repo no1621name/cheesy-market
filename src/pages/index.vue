@@ -15,12 +15,16 @@
         :slider="true"
       />
     </template>
+    <template #afterMain>
+      <ViewedList />
+    </template>
   </NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 import Promo from '@/components/Content/Homepage/Promo.vue';
 import ProductsList from '@/components/Products/List.vue';
+import ViewedList from '@/components/ViewedList.vue';
 
 definePageMeta({
   layout: false,

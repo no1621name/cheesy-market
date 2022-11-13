@@ -30,5 +30,5 @@ definePageMeta({
 
 const id = useRoute().params.id;
 const blogRequest = await useApiAsyncData<ServerResponseI<'blog', Article>>(`blog${id}`, `/blogs/${id}`);
-const blog = useValidateResponse(blogRequest)!.data.blog;
+const blog = useValidateResponse(blogRequest, true)!.data.blog;
 </script>

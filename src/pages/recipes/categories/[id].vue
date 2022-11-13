@@ -23,7 +23,7 @@ const categoryId = +useRoute().params.id;
 const recipeCategoryRequset = await useApiAsyncData<ServerResponseI<'recipeCategory', RecipeCategory>>(
   `recipeCategory${categoryId}`, `/recipes/categories/${categoryId}`
 );
-const { name } = useValidateResponse(recipeCategoryRequset)?.data.recipeCategory || { name: 'Рецепты' };
+const { name } = useValidateResponse(recipeCategoryRequset, true)?.data.recipeCategory || { name: 'Рецепты' };
 
 addBreadCrumb({ name, href: `/recipes/categories/${categoryId}` });
 </script>

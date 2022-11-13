@@ -38,7 +38,7 @@ const handleUnload = async (e: any) => {
 const config = useRuntimeConfig();
 
 onMounted(() => {
-  worker.value = new Worker(new URL('../assets/workers/saveOnLeave.ts', import.meta.url), { type: 'module' });
+  worker.value = new Worker(new URL('../assets/workers/saveOnReload.ts', import.meta.url), { type: 'module' });
 
   window.addEventListener('beforeunload', handleUnload, { capture: true });
 });
@@ -49,9 +49,5 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" scoped>
-.main-layout__content{
-  display: flex;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
+body{}
 </style>

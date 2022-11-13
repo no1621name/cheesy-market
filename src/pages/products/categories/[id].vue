@@ -35,7 +35,7 @@ userStore.$subscribe((_, { userInfo }) => {
 const title = ref('');
 
 const categoryResponse = await useApiAsyncData<ServerResponseI<'category' | 'parent', Category | Category>>(`category${categoryId}`, `/products/categories/${categoryId}`);
-const { category, parent } = useValidateResponse(categoryResponse)?.data || {};
+const { category, parent } = useValidateResponse(categoryResponse, true)?.data || {};
 
 title.value = category?.name || 'Категория';
 

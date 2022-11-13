@@ -95,7 +95,7 @@ withDefaults(defineProps<{
 const userStore = useUserStore();
 const { updateUserInfo } = userStore;
 
-const emit = defineEmits(['close', 'changeForm']);
+const emit = defineEmits(['close', 'changeForm', 'submit']);
 
 const loginEmail = ref('');
 const loginPassword = ref('');
@@ -116,15 +116,15 @@ const sendLoginRequest = async () => {
       email: loginEmail.value,
       password: loginPassword.value,
     },
+    async onResponseError() {
+      isInvalid.value = true;
+    },
     async onResponse({ response }) {
       if (response.ok) {
         await updateUserInfo();
         closeModal();
         isInvalid.value = false;
       }
-    },
-    async onResponseError() {
-      isInvalid.value = true;
     }
   });
 };

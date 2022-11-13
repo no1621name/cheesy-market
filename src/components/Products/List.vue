@@ -96,7 +96,9 @@ const defaultOptions: ProductsListOptions = {
   isInStock: 0,
   discount: 0,
   sort: '_id.asc',
-  search_q: ''
+  search_q: '',
+  ids: [],
+  short: 1,
 };
 
 const props = withDefaults(defineProps<{

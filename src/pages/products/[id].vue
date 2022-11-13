@@ -47,7 +47,7 @@ const product = ref<Product>({} as Product);
 const similarProducts = ref<ShortProduct[]>();
 
 const productResponse = await useApiAsyncData<ServerResponseI<'product', Product>>(`product${productId}`, `/products/${productId}`);
-const productData = useValidateResponse(productResponse, async () => await navigateTo('/404'))?.data;
+const productData = useValidateResponse(productResponse, true)?.data;
 
 product.value = productData!.product;
 
@@ -56,9 +56,7 @@ const similarProductParams: { limit: number, category?: number | number[], type?
 };
 
 if (product.value?.type === 'goods' && product.value.categories) {
-  // FIXME:
-  // similarProductParams.category = product.value.categories[1];
-  similarProductParams.category = [1, 2];
+  similarProductParams.category = product.value.categories[1];
   await addCategory(product.value.categories[1]);
   if (product.value.categories[2]) { await addCategory(product.value.categories[2]); }
 } else {
