@@ -12,7 +12,7 @@ export default defineEventHandler(async (e: any) => {
   };
 
   if (isPost) {
-    options.body = await useBody(e);
+    options.body = await readBody(e);
     options.onResponse = async ({ response }) => {
       const cookies = response.headers.get('set-cookie');
       if (cookies) {

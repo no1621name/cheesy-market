@@ -11,7 +11,7 @@
           </CFormLabel>
           <CFormTextarea
             id="reviewsComment"
-            v-model.trim="reviewText"
+            v-model.trim="reviewData.text"
             maxlength="500"
             minlength="15"
             @input="() => invalidMessage = ''"
@@ -35,7 +35,7 @@
         <CRow :xs="{gutterY: 3, gutterX: 0}">
           <CCol xs="6" class="d-flex align-items-center">
             <Rating
-              v-model="reviewRating"
+              v-model="reviewData.score"
               :readonly="false"
               :increment="0.5"
             />
@@ -65,7 +65,9 @@ import { useUserStore } from '@/store/user';
 import { storeToRefs } from 'pinia';
 
 const emit = defineEmits(['added']);
-const props = withDefaults(defineProps<{ productId?: number }>(), {
+const props = withDefaults(defineProps<{
+  productId?: number,
+}>(), {
   productId: 0,
 });
 
@@ -74,29 +76,29 @@ const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
 
 const { productId } = toRefs(props);
-const selectedFiles = ref<string[]>([]);
-const reviewRating = ref(0);
-const reviewText = ref('');
 const invalidMessage = ref('');
+
+const reviewData = reactive<Omit<Review, '_id' | 'date'>>({
+  city: userInfo.value.address.city,
+  fullname: userInfo.value.fullname,
+  user_id: userInfo.value._id,
+  product_id: productId.value,
+  score: 0,
+  text: '',
+  images: [],
+});
 
 const sendReview = async () => {
   invalidMessage.value = '';
 
-  if (!reviewRating.value) {
+  if (!reviewData.score) {
     invalidMessage.value = 'Вы должны поставить оценку выше нуля';
     return;
   }
 
   await $fetchApi<ServerResponseI<'message' | 'rating', string | number>>('/reviews', {
     method: 'post',
-    body: {
-      fullname: userInfo.value.fullname,
-      score: reviewRating.value,
-      text: reviewText.value,
-      images: selectedFiles.value,
-      city: userInfo.value.address.city,
-      product_id: productId.value,
-    },
+    body: reviewData,
     async onResponse({ response }) {
       emit('added', response._data.data.rating);
     }
@@ -104,7 +106,7 @@ const sendReview = async () => {
 };
 
 const handleFiles = (e: InputEvent) => {
-  selectedFiles.value = [];
+  reviewData.images = [];
   invalidMessage.value = '';
 
   const target = e.target as HTMLInputElement;
@@ -127,7 +129,7 @@ const handleFiles = (e: InputEvent) => {
 
     const reader = new FileReader();
     reader.onload = (e:ProgressEvent<FileReader>) => {
-      selectedFiles.value.push(e.target?.result as string);
+      reviewData.images.push(e.target?.result as string);
     };
     reader.readAsDataURL(file);
   });
