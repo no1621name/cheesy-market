@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden">
+  <div class="overflow-hidden viewed-list">
     <div class="d-flex justify-content-between mb-3">
       <h2 class="title">
         Просмотренные товары:
@@ -104,16 +104,21 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped>
-.viewed-list__naviagation-arrow{
-  display: flex;
-  align-items: center;
-  border: 0;
-  &.swiper-button-disabled{
-    opacity: .5;
+<style lang="scss">
+.viewed-list {
+  .swiper-wrapper{
+    height: 340px;
   }
-  &:first-of-type{
-    transform: rotate(180deg);
+  .viewed-list__naviagation-arrow{
+    display: flex;
+    align-items: center;
+    border: 0;
+    &.swiper-button-disabled{
+      opacity: .5;
+    }
+    &:first-of-type{
+      transform: rotate(180deg);
+    }
   }
 }
 </style>

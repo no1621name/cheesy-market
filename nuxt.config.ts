@@ -9,13 +9,6 @@ export default {
       title: 'Сыроварение',
     },
   },
-  build: {
-    extend(config: any, ctx: any) {
-      if (ctx.isDev) {
-        config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map';
-      }
-    }
-  },
   modules: [
     '@nuxt/image-edge',
     '@nuxtjs/google-fonts',
