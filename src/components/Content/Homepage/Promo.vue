@@ -46,7 +46,7 @@
             Акции
           </h6>
           <h5 class="promo__heading">
-            Закваски для сыра
+            Распродажа 11.11
           </h5>
         </NuxtLink>
       </CCol>

@@ -1,5 +1,4 @@
 <!-- eslint-disable vue/no-v-text-v-html-on-component -->
-<!-- eslint-disable vue/no-v-html -->
 <template>
   <Teleport to="body">
     <ClientOnly>
@@ -10,7 +9,7 @@
         <CToast
           v-for="(toast, index) in stack"
           :key="index"
-          :class="['notification__item', toast.variant ? toast.variant === 'danger' ? 'bg-danger' : 'bg-success' : '']"
+          :class="['notification__item', toast.variant ? `bg-${toast.variant}` : '']"
           :autohide="toast.autohide"
         >
           <CToastHeader

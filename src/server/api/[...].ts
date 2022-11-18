@@ -17,7 +17,7 @@ export default defineEventHandler(async (e: any) => {
       const cookies = response.headers.get('set-cookie');
       if (cookies) {
         // FIXME
-        cookies.split(/SameSite=\w+,/).forEach(c => setHeader(e, 'set-cookie', c));
+        cookies.split(/SameSite=\w+,/).forEach(c => setCookie(e, [...c.matchAll(/\w+=.+/g)][0][0], c));
       }
     };
   }

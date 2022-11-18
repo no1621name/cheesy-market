@@ -303,8 +303,6 @@
           </CTabPane>
           <CTabPane v-if="haveReviews" :visible="tabPaneActiveKey === 3">
             <CRow :lg="{ gutterY: 4 }">
-              <!--
-                TODO
               <template v-if="isAuth">
                 <CCol xs="12" class="mb-3">
                   <ReviewForm
@@ -315,7 +313,7 @@
                     }"
                   />
                 </CCol>
-              </template> -->
+              </template>
               <template v-if="reviews.length">
                 <Review
                   v-for="review in reviews"
@@ -352,25 +350,25 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import Rating from '@/components/UI/Rating.vue';
 import NotFound from '@/components/UI/NotFound.vue';
 import FollowButton from '@/components/UI/FollowButton.vue';
-// import ReviewForm from '@/components/Reviews/Form.vue';
+import ReviewForm from '@/components/Reviews/Form.vue';
 import Review from '@/components/Reviews/Item.vue';
 import Bonuses from './Bonuses.vue';
 import ProductCardModal from './Modal.vue';
 
 import { useViewedStore } from '@/store/viewed';
 import { useCartStore } from '@/store/cart';
-// import { useUserStore } from '@/store/user';
-// import { storeToRefs } from 'pinia';
+import { useUserStore } from '@/store/user';
+import { storeToRefs } from 'pinia';
 
 const props = defineProps<{ product: Product}>();
 
 const { product } = toRefs(props);
 
 const viewedStore = useViewedStore();
-// const userStore = useUserStore();
+const userStore = useUserStore();
 const { addProduct } = useCartStore();
 
-// const { isAuth } = storeToRefs(userStore);
+const { isAuth } = storeToRefs(userStore);
 
 const thumbsSwiper = ref<SwiperInstance>();
 
@@ -383,7 +381,6 @@ const price = useGetPriceWithDiscount(product.value.price,  product.value.discou
 const { bool: isVisibleModal, toggleBool: toggleModal } = useGetToggledBoolean();
 const reviewsElement = ref<any>(null);
 
-const category = ref<number[]>([]);
 const specialProducts = ref<ShortProduct[]>([]);
 const reviews = ref<Review[]>([]);
 const subjects = ref<Subject[]>([]);
@@ -403,12 +400,9 @@ viewedStore.$subscribe((_, { viewedList }) => {
   }
 });
 
-if (product.value?.type === 'goods' && product.value.brand_id && product.value.categories) {
-  const brandId = product.value.brand_id;
-  category.value = product.value.categories;
-
-  const brandRequest = await useApiFetch<ServerResponseI<'name', string>>(`/products/brands/${brandId}`);
-  brandName.value = useValidateResponse(brandRequest)?.data.name || '';
+if (product.value.type === 'goods' && product.value.brand_id) {
+  const brandRequest = await useApiFetch<ServerResponseI<'brand', Brand>>(`/products/brands/${product.value.brand_id}`);
+  brandName.value = useValidateResponse(brandRequest)?.data.brand.name || '';
 }
 
 const setThumbsSwiper = (swiper: SwiperInstance) => {
@@ -431,7 +425,7 @@ const getSpecialProducts = async () => {
 const getReviews = async () => {
   await $fetchApi<ServerResponseI<'reviews', Review[]>>(
     '/reviews', {
-      params: {
+      query: {
         id: product.value._id
       },
       async onResponse({ response }) {
@@ -453,7 +447,7 @@ const getSubjectsList = async () => {
 const changeSubject = async (name: string, id: number) => {
   selectedSubject.value = name;
 
-  await $fetchApi<ServerResponseI<'priceList', Delivery[]>>('/orders/delivery/price-list', {
+  await $fetchApi<ServerResponseI<'priceList', Delivery[]>>('/delivery/price-list', {
     params: {
       subject: id,
     },

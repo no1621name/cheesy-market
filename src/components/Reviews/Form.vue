@@ -1,5 +1,5 @@
 <template>
-  <Form class="reviews-form" @submit.prevent="sendReview">
+  <Form class="reviews-form" @submit="sendReview">
     <template #header>
       <h5>Оставить отзыв:</h5>
     </template>
@@ -41,7 +41,11 @@
             />
           </CCol>
           <CCol xs="6" class="d-flex justify-content-end">
-            <CButton class="button_success" :disabled="!!invalidMessage.length">
+            <CButton
+              type="submit"
+              class="button_success"
+              :disabled="!!invalidMessage.length"
+            >
               Отправить
             </CButton>
           </CCol>
@@ -64,14 +68,14 @@ import { useNotifierStore } from '@/store/notifier';
 import { useUserStore } from '@/store/user';
 import { storeToRefs } from 'pinia';
 
-const emit = defineEmits(['added']);
+const emit = defineEmits(['added', 'submit']);
 const props = withDefaults(defineProps<{
   productId?: number,
 }>(), {
   productId: 0,
 });
 
-const { addServerError } = useNotifierStore();
+const { addServerError, addNotification } = useNotifierStore();
 const userStore = useUserStore();
 const { userInfo } = storeToRefs(userStore);
 
@@ -79,13 +83,20 @@ const { productId } = toRefs(props);
 const invalidMessage = ref('');
 
 const reviewData = reactive<Omit<Review, '_id' | 'date'>>({
-  city: userInfo.value.address.city,
-  fullname: userInfo.value.fullname,
-  user_id: userInfo.value._id,
-  product_id: productId.value,
+  city: '',
+  fullname: '',
+  user_id: 0,
+  product_id: 0,
   score: 0,
   text: '',
   images: [],
+});
+
+onMounted(() => {
+  reviewData.city = userInfo.value.address.city;
+  reviewData.fullname = userInfo.value.fullname;
+  reviewData.user_id = userInfo.value._id;
+  reviewData.product_id = productId.value;
 });
 
 const sendReview = async () => {
@@ -95,14 +106,22 @@ const sendReview = async () => {
     invalidMessage.value = 'Вы должны поставить оценку выше нуля';
     return;
   }
-
-  await $fetchApi<ServerResponseI<'message' | 'rating', string | number>>('/reviews', {
-    method: 'post',
-    body: reviewData,
-    async onResponse({ response }) {
-      emit('added', response._data.data.rating);
-    }
-  });
+  try {
+    await $fetchApi<ServerResponseI<'message' | 'rating', string | number>>('/reviews', {
+      method: 'post',
+      body: reviewData,
+      async onResponse({ response }) {
+        emit('added', response._data.data.rating);
+      },
+    }, false);
+  } catch {
+    addNotification({
+      title: 'Предупреждение!',
+      body: 'Вы уже оставили отзыв на этот продукт',
+      autohide: true,
+      variant: 'warning'
+    });
+  }
 };
 
 const handleFiles = (e: InputEvent) => {

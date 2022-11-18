@@ -7,7 +7,7 @@ declare global {
   interface CustomNotification {
     title: string,
     body: string
-    variant?: 'danger' | 'success',
+    variant?: 'danger' | 'success' | 'warning',
     autohide: boolean,
   }
 
